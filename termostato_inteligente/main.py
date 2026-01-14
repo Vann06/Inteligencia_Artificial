@@ -16,3 +16,5 @@ def main():
         env.update(action)
         print("Nuevo estado:", env.temperature)
         print("\n")
+
+main()
