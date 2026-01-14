@@ -1,8 +1,6 @@
 import random
 
 class Environment:
-    def __init__(self):
-        self.temperature = random.uniform(15, 30)  # Temperature in Celsius
 
     def get_percept(self):
         #simulación de sensores
@@ -14,3 +12,7 @@ class Environment:
             self.temperature += 5
         elif action == "enfriar":
             self.temperature -= 5
+    
+    def setTemperature(self, lower, higher):
+        self.temperature = random.uniform(lower, higher)
+        return self.temperature

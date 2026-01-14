@@ -10,8 +10,9 @@ def main():
     #El estado actual (Temperatura). o La acción elegida por el agente. o El nuevo estado después de la acción.  
     for i in range(10):
         print("Iteración", i)
-        print("Estado actual:", env.temperature)
-        action = agent.act(env.temperature)
+        actual_temp: int = env.setTemperature(15, 30)
+        print("Estado actual:", actual_temp)
+        action = agent.act(actual_temp)
         print("Acción:", action)
         env.update(action)
         print("Nuevo estado:", env.temperature)
