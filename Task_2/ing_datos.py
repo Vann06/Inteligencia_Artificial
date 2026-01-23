@@ -22,7 +22,7 @@ def genera_data_sucia(
     np.random.seed(seed)
     # Generar Edades y Salarios
     edades = np.random.randint(18, 70, size=n).astype(float) 
-    salarios = np.random.randint(3000, 25000, size=n)
+    salarios = np.random.randint(3000, 25001, size=n)
 
     # Generar Compro_Producto con distribución desbalanceada
     compro_producto = np.array([0] * majority_count + [1] * minority_count )
@@ -42,10 +42,28 @@ def genera_data_sucia(
 
     return df
 
+# Manejo de Datos Faltantes 
+def manejo_edad(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Imputar valores faltantes en la columna 'Edad' con la mediana de la columna.
+    """
+    promedio_edad = df["Edad"].mean()
+
+    for i in df.index:
+        if pd.isna(df.loc[i, "Edad"]):
+            df.loc[i, "Edad"] = promedio_edad
+
+    
+    # El utilizar el promedio puede afectar si la distribución 
+    # de edad es muy alta. Si existiera alguien con 100 años por ejemplo 
+    # Es más seguro utilizar la mediana en estos casos porque es más robusta 
+    #a valores atípicos.
+
+    return df
+
 
 def main() -> None:
     """
-    Orquesta el flujo:
     1) Generar dataset sucio
     2) Imputar faltantes manualmente
     3) Undersampling manual para balancear clases
@@ -57,6 +75,12 @@ def main() -> None:
     print("NaN en Edad:", df_sucio["Edad"].isna().sum())
     print("Distribución Compro_Producto:\n", df_sucio["Compro_Producto"].value_counts())
     print("\n Muestra del dataset sucio:\n", df_sucio.head())
+
+    df = manejo_edad(df_sucio)
+    print("\n Dataset después de imputar Edad:")
+    print("NaN en Edad:", df["Edad"].isna().sum())
+
+    print(df.head())
 
     print(":D")
 
