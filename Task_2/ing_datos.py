@@ -45,7 +45,7 @@ def genera_data_sucia(
 # Manejo de Datos Faltantes 
 def manejo_edad(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Imputar valores faltantes en la columna 'Edad' con la mediana de la columna.
+    Imputar valores faltantes en la columna 'Edad' con promedio de la columna.
     """
     promedio_edad = df["Edad"].mean()
 
@@ -55,12 +55,30 @@ def manejo_edad(df: pd.DataFrame) -> pd.DataFrame:
 
     
     # El utilizar el promedio puede afectar si la distribución 
-    # de edad es muy alta. Si existiera alguien con 100 años por ejemplo 
+    # de edad es muy alta o valores atípicos. Si existiera alguien con 100 años por ejemplo 
     # Es más seguro utilizar la mediana en estos casos porque es más robusta 
     #a valores atípicos.
 
     return df
 
+def undersampling(df: pd.DataFrame, target_column: str = "Compro_Producto", seed: int = 42) -> pd.DataFrame:
+    """
+    Realizar undersampling manual para balancear las clases en 'Compro_Producto'.
+    """
+    np.random.seed(seed)
+    # Separar las clases
+    df_min = df[df[target_column] == 1]
+    df_maj = df[df[target_column] == 0]
+
+    # elegir aleatorio las mayoria
+    n_min = len(df_min)
+    maj_sample_idx = np.random.choice(df_maj.index, n_min, replace=False)
+
+    #construir df balanceado 
+    df_maj_sample = df_maj.loc[maj_sample_idx]
+    df_balanceado = pd.concat([df_min, df_maj_sample], axis = 0)
+    df_balanceado = df_balanceado.sample(frac=1, random_state=seed).reset_index(drop=True)  # mezclar filas
+    return df_balanceado
 
 def main() -> None:
     """
@@ -68,21 +86,26 @@ def main() -> None:
     2) Imputar faltantes manualmente
     3) Undersampling manual para balancear clases
     """
-    # 1) Generar dataset sucio
     df_sucio = genera_data_sucia()
-    print("Dataset Sucio:")
+    print("==== Generacion de Dataset Sucio ====")
     print("Filas, Columnas:", df_sucio.shape)
     print("NaN en Edad:", df_sucio["Edad"].isna().sum())
     print("Distribución Compro_Producto:\n", df_sucio["Compro_Producto"].value_counts())
     print("\n Muestra del dataset sucio:\n", df_sucio.head())
 
+    print("==== Manejo de Datos Faltantes ====")
     df = manejo_edad(df_sucio)
     print("\n Dataset después de imputar Edad:")
     print("NaN en Edad:", df["Edad"].isna().sum())
-
     print(df.head())
 
-    print(":D")
+    print("==== Manejo de Datos Desbalanceados ====")
+    print("\nConteo antes de balancear:\n", df["Compro_Producto"].value_counts())
+    df_balanceado = undersampling(df)
+    print("\nConteo después de balancear:\n", df_balanceado["Compro_Producto"].value_counts())
+    print("Tamaño df_balanceado:", df_balanceado.shape)
+    print("\n Muestra del dataset balanceado:\n", df_balanceado.head())
+    print("fin :D")
 
 
 if __name__ == "__main__":
