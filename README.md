@@ -9,7 +9,7 @@
 
 Video del task 2.2 
 
-[![Ver video principal](https://img.shields.io/badge/Ver%20Video%20Principal-red?style=for-the-badge&logo=youtube)](PEGAR_LINK_DEL_VIDEO_AQUI)
+[![Ver video principal](https://img.shields.io/badge/Ver%20Video%20Principal-red?style=for-the-badge&logo=youtube)](https://youtu.be/9uzmjrSFg2o)
 
 
 
