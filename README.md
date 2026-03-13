@@ -5,6 +5,15 @@
 - Notebook principal: Connect_Four.ipynb
 - Script alternativo para pruebas por consola: test_minimax.py
 
+## Video y mini playoff
+
+Video del task 2.2 
+
+[![Ver video principal](https://img.shields.io/badge/Ver%20Video%20Principal-red?style=for-the-badge&logo=youtube)](PEGAR_LINK_DEL_VIDEO_AQUI)
+
+
+
+
 ## Task 2.1 - Logica base + Minimax puro
 
 Requisitos:
