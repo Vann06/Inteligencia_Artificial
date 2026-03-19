@@ -99,3 +99,22 @@ En Connect_Four.ipynb:
 5. "Finalmente juego yo contra la IA para intentar ganarle."
 
 
+## Laboratorio 7 - Task 2.1: TD Learning
+
+Requisitos:
+- Agente que aprenda Connect Four con TD learning.
+- Definir representacion de estado, algoritmo de actualizacion, recompensa, exploracion y entrenamiento.
+
+Estado en este proyecto:
+- Agente Q-learning tabular con tabla Q esparsa (diccionario).
+- Estado: tablero aplanado a una tupla de 42 valores (0,1,2).
+- Recompensa: gana +1, pierde -1, empate 0, sin recompensas intermedias.
+- Exploracion: epsilon-greedy con decaimiento hasta un minimo.
+- Entrenamiento: contra oponente fijo (aleatorio) y evaluacion sin exploracion.
+
+En Connect_Four.ipynb:
+1. Ejecutar la seccion "Lab 7 - Task 2.1: TD Learning".
+2. Entrenar con `train_q_agent(...)` y observar la tasa de victorias por bloques.
+3. Evaluar con `evaluate_agent(...)` para medir rendimiento final.
+
+
